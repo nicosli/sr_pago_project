@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\CacheController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use App\Models\Addresses;
 use Validator;
-use GuzzleHttp\Client;
 
 
 class PricingController extends Controller
 {
+
     /**
      * Retrieve gas pricing
      *
@@ -18,7 +20,7 @@ class PricingController extends Controller
      */
     public static function get(Request $request){
 
-        $error = false;
+        $success = true;
         $results = "";
         $errorMessage = "";
         $codeResponse = 200;
@@ -48,28 +50,17 @@ class PricingController extends Controller
                 'county' => $request->get('county'),
                 'municipality' => ! empty ($request->get('municipality'))? $request->get('municipality') : ''
             ]);
-            $addresses->limit(10);
+
             // Retrieve the data from database
             $addresses = $addresses->get();
 
             // if the query has results
             if(count($addresses) > 0){
-                
-                try {
-                    $client = new Client([ 'base_uri' => config('services.API_GAS') ]);
-                    $response = $client->request('GET', '/v1/precio.gasolina.publico?pageSize=10018');
-                    
-                    // Clean Byte Order Mark before json decode
-                    $json = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response->getBody());
-                    $gasLocations = json_decode($json, true);
-                    $gasLocations = $gasLocations['results'];
 
-                    // Merge both results
+                $gasLocations = Cache::get('gasLocations');
+                if($gasLocations != null){
                     $results = Self::getLocations($addresses, $gasLocations);
-                } catch (\Throwable $th) {
-                    $errorMessage = "Error internal " . $th;
-                    $codeResponse = 500;
-                }
+                } 
 
             } else {
                 // if the query result is empty
@@ -78,12 +69,12 @@ class PricingController extends Controller
             }
 
         } else {
-            $error = true;
+            $success = false;
             $errorMessage = $validator->errors()->all();
         }
 
         return response()->json([
-            "error" => $error,
+            "success" => $success,
             "message" => $errorMessage,
             "results" => $results
         ], $codeResponse );
@@ -107,7 +98,7 @@ class PricingController extends Controller
                 $cp_filtered = $address->d_codigo;
                 $cp[] = $cp_filtered;
 
-                // Loop to get gas locations only the cp filtered
+                // Loop to get gas locations (only the cp filtered)
                 foreach($gasLocations as $location){
                     if($location['codigopostal'] == $cp_filtered)
                         $gasLocationsResults[] = [

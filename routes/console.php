@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\XMLHandler;
+use App\Http\Controllers\CacheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,10 @@ Artisan::command('inspire', function () {
 Artisan::command('XMLtoDataBase', function() {
     XMLHandler::dump();
 })->purpose('Dump XML file to database');
+
+/*
+* Artisan command to generate cache
+*/
+Artisan::command('cache:generate', function() {
+    CacheController::generate();
+})->purpose('Generate cache of API Gas');
