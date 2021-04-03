@@ -30,6 +30,8 @@ class PricingController extends Controller
         $rules = [
             'county' => 'required|max:255',
             'municipality' => 'max:255',
+            'orderDirection' => 'required|max:4',
+            'orderBy' => 'required|max:7',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -59,7 +61,12 @@ class PricingController extends Controller
 
                 $gasLocations = Cache::get('gasLocations');
                 if($gasLocations != null){
-                    $results = Self::getLocations($addresses, $gasLocations);
+                    $results = Self::getLocations(
+                        $addresses, 
+                        $gasLocations, 
+                        $request->get('orderBy'),
+                        $request->get('orderDirection')
+                    );
                 } 
 
             } else {
@@ -86,7 +93,8 @@ class PricingController extends Controller
      * @param array
      * @return array
      */
-    public static function getLocations($addresses, $gasLocations){
+    public static function getLocations($addresses, $gasLocations, $orderBy, $orderDirection){
+        
         // codigopostal array
         $cp = [];
         $filteredAddreses = [];
@@ -123,6 +131,11 @@ class PricingController extends Controller
 
             }
         }
+        
+        // Order array
+        $sort = $orderDirection == 'ASC' ? SORT_ASC : SORT_DESC;
+        $keys = array_column($gasLocationsResults, $orderBy);
+        array_multisort($keys, $sort, $gasLocationsResults);
 
         return $gasLocationsResults;
     }
