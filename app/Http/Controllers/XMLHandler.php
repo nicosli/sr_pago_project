@@ -15,7 +15,7 @@ class XMLHandler extends Controller
     public static function dump(){
 
         // Read file from storage
-        $file = storage_path() . "/app/public/data.xml";
+        $file = storage_path() . "/app/public/CPdescarga.xml";
         $xml = @simplexml_load_file($file) or die ("Error while loading: ".$file."\n");
         
         // Loop to get data from xml object
