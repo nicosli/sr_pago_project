@@ -67,7 +67,14 @@ class PricingController extends Controller
                         $request->get('orderBy'),
                         $request->get('orderDirection')
                     );
-                } 
+                    if(count($results) == 0){
+                        $codeResponse = 204;    
+                    }
+                } else {
+                    $success = false;
+                    $errorMessage = "No cache found. Run in console: php artisan cache:generate";
+                    $codeResponse = 500;
+                }
 
             } else {
                 // if the query result is empty
