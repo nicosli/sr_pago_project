@@ -43,6 +43,8 @@ export default {
         }
     },
     methods: {
+        // Function to call the API 
+        // this service get the countys
         getCountys: function(){
             this.$http.get(process.env.MIX_API + '/api/county')
             .then( ({data}) => {
@@ -54,20 +56,29 @@ export default {
                 throw error
             })
         },
+        // Method to handle the dataTable var
+        // this object is the main object with gas locations
         dataTableHandler(dataTable){
             this.dataTable = dataTable
         },
+
+        // Method to handle the loading event
         loadingHandler(loading){
             this.loading = loading
         },
+
+        // Method to handle the error events
         errorServerFunction(errorMessage){
             this.errorMessage = errorMessage
         },
+
+        // Method to handle the status code of the responses
         responseStatusHandler(responseStatus){
             this.responseStatus = responseStatus
         }
     },
     mounted() {
+        // First steep, retrieve the county data
         this.getCountys();
     }
 }

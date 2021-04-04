@@ -33,13 +33,8 @@ export default {
         }
     },
     methods: {
-        toggleInfoWindow(context) {
-            this.infoWIndowContext = context
-            this.showInfo = true
-        },
-        infoClicked(context) {
-            console.log(context)
-        },
+        // This method iterates the locations 
+        // and gets latitude and longitude
         getMarkers(){
             let m = [];
             var _this = this;
@@ -54,6 +49,8 @@ export default {
             });
             this.markers = m;
         },
+        // Method to center the Google Map
+        // Through of bounds function
         centerMap(){
             const bounds = new google.maps.LatLngBounds();
             for (let m of this.markers) {
@@ -63,9 +60,15 @@ export default {
         },
     },
     watch: {
+        // When the locations prop change
+        // then, call the getMarkers function
+        // to get latitud and longitude
         locations: function(location){
             this.getMarkers()
         },
+        // When markers changes
+        // then, call the center map function
+        // to center the map with new markers
         markers: function(markers){
             this.centerMap();
         }

@@ -5,7 +5,7 @@
             {{ dataItems.length }} Gas Locations Results Found
         </div>
         
-
+        <!-- table pagination -->
         <b-pagination
             v-if="dataItems.length > 10"
             v-model="currentPage"
@@ -14,6 +14,7 @@
             aria-controls="gasLocationsTable"
         ></b-pagination>
 
+        <!-- table with results -->
         <b-table 
             responsive
             id="gasLocationsTable"
@@ -44,6 +45,8 @@ export default {
         dataTable: function(dataTable){
             this.dataItems = dataTable
         },
+        // When the loading value change and is true
+        // then put dataItems empty
         loading: function(loading){
             if(loading == true)
                 this.dataItems = []
@@ -55,6 +58,7 @@ export default {
       }
     },
     props: {
+        // Props requireds
         dataTable: {required: true},
         loading: {required: true}
     }

@@ -16,6 +16,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 
+// Load google maps dependency
 import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.use(VueGoogleMaps, {
     load: {
@@ -29,11 +30,8 @@ Vue.use(VueGoogleMaps, {
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('form-component', require('./components/FormComponent.vue').default);
 Vue.component('map-component', require('./components/MapComponent.vue').default);

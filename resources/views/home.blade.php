@@ -10,6 +10,7 @@
                     <h4 class="alert-heading">Welcome!</h4>
                     <p>This website shows the gas stations by filling out the following form.</p>
                 </div>
+                <!-- Inject Main Component -->
                 <main-component></main-component>
             </div>
         </div>

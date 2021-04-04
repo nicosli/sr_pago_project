@@ -51,6 +51,8 @@ export default {
         }
     },
     methods: {
+        // Function to call the API 
+        // this service get the municipalities
         getMunicipalities(){
             this.loading = true;
             this.$http.get(process.env.MIX_API + '/api/municipality?county=' + this.countySelected)
@@ -63,6 +65,8 @@ export default {
                 throw error
             })
         },
+        // Function to call the API 
+        // this service get the gas locations
         getGasLocations(){
             this.loading = true;
             this.$emit('loading', true)
@@ -74,6 +78,8 @@ export default {
                 + '&orderDirection=' + this.orderDirection
                 + '&orderBy=' + this.orderBy
             ).then(response => {
+                // Check the status code from response
+                // to emit the events to the parent
                 if(response.status == 200){
                     this.$emit('dataTable', response.body.results)
                     this.$emit('loading', false)
@@ -84,9 +90,9 @@ export default {
                     this.loading = false
                 }
 
+                // Emit the response status to parent
                 this.$emit('responseStatus', response.status)
                 
-                console.log(response.status)
             }).catch((error) => {
                 this.loading = false
                 this.$emit('loading', false)
@@ -101,18 +107,21 @@ export default {
             this.getMunicipalities()
             this.getGasLocations()
         },
+        // When the municipality input select change 
+        // then, call the gas location function
         municipalitySelected: function(municipalitySelected){
             this.getGasLocations()
         },
+        // When the orderBy input select change 
+        // then, call the gas location function
         orderBy: function(orderBy){
             this.getGasLocations()
         },
+        // When the orderDirection input select change 
+        // then, call the gas location function
         orderDirection: function(orderDirection){
             this.getGasLocations()
         }
-    },
-    mounted(){
-        
     },
     props: {
         countys: {required: true}
