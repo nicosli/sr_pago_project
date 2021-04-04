@@ -1,62 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Gas Stations Search
+![Gas Locations](https://raw.githubusercontent.com/nicosli/sr_pago_project/master/public/img/gas_location.png)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About this project
+This app web shows the gas stations in a county and municipality, it shows a map with the gas markers and a table with the results.
 
-## About Laravel
+## Requirements
+Make sure to have this requirement to install the project locally.
+```bash
+PHP 7.4.2
+node 12.16.1
+npm 6.13.4
+composer 1.7
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Install the project locally.
+First, clone the project to some folder in the local.
+```
+git clone https://github.com/nicosli/sr_pago_project.git
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Install the dependencies of the project. Run this command in the CLI console.
+```
+composer install
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+If the .env file is not created, then make this file at the root of the project and copy the values of .env.example, and put these vars in the .env file. 
+```
+MIX_API=http://localhost:8000
+MIX_GOOGLE_KEY=AIzaSyDJd_yXAO_Kmuz3j9FqOmydUtK78pWuRBc
+API_GAS=https://api.datos.gob.mx
+```
+Review the database vars in the .env file and put the username, password, port, and database name from your local installation
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Learning Laravel
+Run this command to generate the key of the project
+```
+php artisan key:generate
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Run this command to clear the config cache of the new .env file.
+```
+php artisan config:cache
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Run the migration to make the tables in the database.
+```
+php artisan migrate
+```
 
-## Laravel Sponsors
+Download the XML file with Addresses information (Make sure it's the xml file).
+```
+https://www.correosdemexico.gob.mx/SSLServicios/ConsultaCP/CodigoPostal_Exportar.aspx
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Save the CPdescarga.xml file in this path of the project.
+```
+/storage/app/public
+```
 
-### Premium Partners
+Run this command in the CLI Console to populate the database. This command read the XML file and put the info in the database. This process can take a long time (around 15 minutes).
+```
+php artisan XMLtoDataBase
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+The project handles a cache to improve the time response. To generate this cache run this command in the CLI Console.
+```
+php artisan cache:generate
+```
 
-## Contributing
+Install dependencies of the package.json and compile the assets to use in the front view.
+``` 
+npm install && npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To run the project, use this command in the CLI Console
+``` 
+php artisan serve --port=8000
+```
 
-## Code of Conduct
+## To do
+In order to improve this web application, it is proposed to create a cron to generate the cache every specific time. Similarly, there are areas of opportunity in the user experience on the frontend.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The testing phase is not implemented yet.
 
-## Security Vulnerabilities
+Lastly, the project needs to be prepared for deployment to production.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
