@@ -1,4 +1,6 @@
-## Gas Stations Search
+## Gas Locations Search
+Gas Locations search project
+
 ![Gas Locations](https://raw.githubusercontent.com/nicosli/sr_pago_project/master/public/img/gas_location.png)
 
 ## About this project
