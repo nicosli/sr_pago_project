@@ -26,7 +26,7 @@ composer install
 If the .env file is not created, then make this file at the root of the project and copy the values of .env.example, and put these vars in the .env file. 
 ```
 MIX_API=http://localhost:8000
-MIX_GOOGLE_KEY=AIzaSyDJd_yXAO_Kmuz3j9FqOmydUtK78pWuRBc
+MIX_GOOGLE_KEY=YOURGOOGLEKEY
 API_GAS=https://api.datos.gob.mx
 ```
 Review the database vars in the .env file and put the username, password, port, and database name from your local installation
