@@ -8,7 +8,7 @@ use App\Models\Addresses;
 class XMLHandler extends Controller
 {
     /**
-     * Read xml file and put to database
+     * Read xml file and put the information to database
      *
      * @return void
      */
