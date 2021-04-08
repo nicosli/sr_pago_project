@@ -87,7 +87,7 @@ php artisan serve --port=8000
 ## To do
 In order to improve this web application, it is proposed to create a cron to generate the cache every specific time. Similarly, there are areas of opportunity in the user experience on the frontend.
 
-The testing phase is not implemented yet.
+The testing phase is not implemented yet (PHP Unit) & The PHP MESS Detector to keep the code maintiable.
 
 Lastly, the project needs to be prepared for deployment to production.
 
