@@ -90,5 +90,3 @@ In order to improve this web application, it is proposed to create a cron to gen
 The testing phase is not implemented yet (PHP Unit) & The PHP MESS Detector to keep the code maintiable.
 
 Lastly, the project needs to be prepared for deployment to production.
-
-## Unit Test
